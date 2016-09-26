@@ -3,19 +3,117 @@
   "views": [
     {
       "type": "kendo-ui-mobile:view",
-      "name": "home",
-      "components": [],
+      "name": "homeView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:about",
+          "name": "homeViewModel",
+          "contactButton": false,
+          "facebookButton": false,
+          "twitterButton": false
+        }
+      ],
       "title": "Home View",
       "addToNavigation": true,
       "icon": "home"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "mapView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "addScreenExtraFields": [],
+          "editScreenExtraFields": [],
+          "components": [],
+          "name": "mapViewModel",
+          "dataProvider": "energienetwerk",
+          "collection": "Buis",
+          "headerField": "Type",
+          "addItemForm": false,
+          "editItemForm": false,
+          "deleteItemButton": false,
+          "pullToRefresh": false,
+          "endlessScroll": false,
+          "isMapView": true,
+          "mapApiKey": "pk.eyJ1Ijoicm9sYW5kZGVwaWpwZXIiLCJhIjoiY2lyNjR5aTJrMDAwemlobm9kY3dpZnpjZCJ9.GZcY2N_EdUJgNAyGbGZ4uQ",
+          "geoPointField": "BeginPunt",
+          "serverSideSortingField": "CreatedAt",
+          "serverSideSortingDirection": "asc",
+          "serverSidePaging": false,
+          "detailHeaderFieldSource": "static",
+          "detailHeaderFieldValue": "Detail"
+        }
+      ],
+      "title": "Map",
+      "addToNavigation": true,
+      "icon": "organize"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "homeView1",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "addScreenExtraFields": [],
+          "editScreenExtraFields": [],
+          "components": [
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "textAreaField",
+                  "dataBindingRelationChildren": "[]",
+                  "dataBindingMultipleSelectChildren": "[]",
+                  "title": "Textarea field",
+                  "inputType": "textArea",
+                  "wideFieldTitlePosition": "top"
+                }
+              ],
+              "name": "editableListForm3",
+              "formType": "detail"
+            }
+          ],
+          "name": "homeView1Model",
+          "dataProvider": "energienetwerk",
+          "collection": "regels",
+          "headerField": "regels",
+          "addItemForm": false,
+          "editItemForm": false,
+          "deleteItemButton": false,
+          "pullToRefresh": false,
+          "endlessScroll": false,
+          "isMapView": false,
+          "serverSideSortingField": "CreatedAt",
+          "serverSideSortingDirection": "asc",
+          "serverSidePaging": false,
+          "detailHeaderFieldSource": "dataBound",
+          "detailHeaderField": "regels"
+        }
+      ],
+      "title": "Regels",
+      "addToNavigation": true,
+      "icon": "organize"
     }
   ],
-  "dataProviders": [],
+  "dataProviders": [
+    {
+      "type": "kendo-ui-mobile:dataProvider",
+      "name": "energienetwerk",
+      "title": "energienetwerk / energienetwerk",
+      "source": "everlive",
+      "everliveKey": "fdlokp2fcy7v4kdb",
+      "offlineStorage": true
+    }
+  ],
   "name": "kendoUiMobileApp",
-  "navigation": "tabstrip",
-  "view": "home",
-  "transition": "slide",
-  "showMoreTab": true,
+  "navigation": "drawer",
+  "view": "homeView",
   "skin": "nova",
   "skinMainColor": "#32364c",
   "skinTextColor": "#ffffff",
