@@ -1,0 +1,140 @@
+{
+  "type": "kendo-ui-mobile",
+  "views": [
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "homeView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:about",
+          "name": "homeViewModel",
+          "appName": "Enexis",
+          "appIcon": "th155L8NMJ.jpg",
+          "contactButton": false,
+          "facebookButton": false,
+          "twitterButton": false
+        }
+      ],
+      "title": "Home",
+      "addToNavigation": true,
+      "icon": "home"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "mapView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "addScreenExtraFields": [],
+          "editScreenExtraFields": [],
+          "components": [],
+          "name": "mapViewModel",
+          "dataProvider": "energienetwerk",
+          "collection": "Buis",
+          "headerField": "Type",
+          "addItemForm": false,
+          "editItemForm": false,
+          "deleteItemButton": false,
+          "pullToRefresh": false,
+          "endlessScroll": false,
+          "isMapView": true,
+          "mapApiKey": "pk.eyJ1Ijoicm9sYW5kZGVwaWpwZXIiLCJhIjoiY2lyNjR5aTJrMDAwemlobm9kY3dpZnpjZCJ9.GZcY2N_EdUJgNAyGbGZ4uQ",
+          "geoPointField": "BeginPunt",
+          "serverSideSorting": true,
+          "serverSideSortingField": "CreatedAt",
+          "serverSideSortingDirection": "asc",
+          "serverSidePaging": false,
+          "detailHeaderFieldSource": "static",
+          "detailHeaderFieldValue": "Detail"
+        }
+      ],
+      "title": "Map",
+      "addToNavigation": true,
+      "icon": "organize"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "homeView1",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:editableList",
+          "listExtraFields": [],
+          "detailExtraFields": [],
+          "addScreenExtraFields": [],
+          "editScreenExtraFields": [],
+          "components": [],
+          "name": "homeView1Model",
+          "dataProvider": "energienetwerk",
+          "collection": "regels",
+          "headerField": "regels",
+          "addItemForm": false,
+          "editItemForm": false,
+          "deleteItemButton": false,
+          "pullToRefresh": true,
+          "endlessScroll": false,
+          "isMapView": false,
+          "serverSideSorting": true,
+          "serverSideSortingField": "regels",
+          "serverSideSortingDirection": "desc",
+          "serverSidePaging": false,
+          "detailHeaderFieldSource": "dataBound",
+          "detailHeaderField": "regels"
+        }
+      ],
+      "title": "Regels",
+      "addToNavigation": true,
+      "icon": "organize"
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "authenticationView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:authentication",
+          "name": "authenticationViewModel",
+          "dataProvider": "energienetwerk",
+          "enableRegistration": false,
+          "enableLogout": true,
+          "logoutLabel": "Sign Out",
+          "enableRememberme": true,
+          "remembermeLabel": "Remember Me",
+          "emailLabel": "Email",
+          "emailPlaceholder": "Email",
+          "passwordLabel": "Password",
+          "passwordPlaceholder": "Password",
+          "signinLabel": "Sign In",
+          "signinRedirect": "homeView"
+        }
+      ],
+      "title": "inloggen",
+      "addToNavigation": false
+    }
+  ],
+  "dataProviders": [
+    {
+      "type": "kendo-ui-mobile:dataProvider",
+      "name": "energienetwerk",
+      "title": "energienetwerk / energienetwerk",
+      "source": "everlive",
+      "everliveKey": "fdlokp2fcy7v4kdb",
+      "offlineStorage": true
+    },
+    {
+      "type": "kendo-ui-mobile:dataProvider",
+      "name": "energienetwerk1",
+      "title": "energienetwerk / energienetwerk",
+      "source": "everlive",
+      "everliveKey": "fdlokp2fcy7v4kdb",
+      "offlineStorage": true
+    }
+  ],
+  "name": "kendoUiMobileApp",
+  "navigation": "drawer",
+  "view": "homeView",
+  "skin": "flat",
+  "skinMainColor": "#1a1a1a",
+  "skinTextColor": "#ffffff",
+  "skinAccentColor": "#10c4b2"
+}
