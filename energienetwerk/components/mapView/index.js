@@ -11,9 +11,18 @@ app.mapView = kendo.observable({
 // END_CUSTOM_CODE_mapView
 (function(parent) {
     var dataProvider = app.data.energienetwerk,
+        /// start global model properties
+        /// end global model properties
         fetchFilteredData = function(paramFilter, searchFilter) {
             var model = parent.get('mapViewModel'),
+                dataSource;
+
+            if (model) {
                 dataSource = model.get('dataSource');
+            } else {
+                parent.set('mapViewModel_delayedFetch', paramFilter || null);
+                return;
+            }
 
             if (paramFilter) {
                 model.set('paramFilter', paramFilter);
@@ -89,28 +98,32 @@ app.mapView = kendo.observable({
 
             return d.promise();
         },
-        setupMap = function() {
+        defaultMapContainer = 'mapViewModelMap',
+        setupMapView = function(container) {
             if (!mapViewModel.map) {
-                mapViewModel.map = L.map('mapViewModelMap');
+                if (typeof container !== 'string') {
+                    container = defaultMapContainer;
+                }
+                mapViewModel.map = L.map(container);
                 mapViewModel.markersLayer = new L.FeatureGroup();
 
                 var tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     attribution: 'Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                     id: 'mapbox.streets',
-                    accessToken: "pk.eyJ1Ijoicm9sYW5kZGVwaWpwZXIiLCJhIjoiY2lyNjR5aTJrMDAwemlobm9kY3dpZnpjZCJ9.GZcY2N_EdUJgNAyGbGZ4uQ"
+                    accessToken: 'pk.eyJ1Ijoicm9sYW5kZGVwaWpwZXIiLCJhIjoiY2lyNjR5aTJrMDAwemlobm9kY3dpZnpjZCJ9.GZcY2N_EdUJgNAyGbGZ4uQ'
                 });
 
                 mapViewModel.map.addLayer(tileLayer);
 
                 mapViewModel.map.addLayer(mapViewModel.markersLayer);
                 mapViewModel.map.on('click', function(e) {
-                    mapViewModel.set("itemDetailsVisible", false);
+                    mapViewModel.set('itemDetailsVisible', false);
                 });
             }
 
-            addMarkers();
+            addMarkersView();
         },
-        addMarkers = function() {
+        addMarkersView = function() {
             getLocation()
                 .then(function(userPosition) {
                     var marker,
@@ -135,9 +148,11 @@ app.mapView = kendo.observable({
                             latLang = [position.latitude, position.longitude];
                         } else if (position.hasOwnProperty('Latitude') && position.hasOwnProperty('Longitude')) {
                             latLang = [position.Latitude, position.Longitude];
+                        } else if (position.length == 2) {
+                            latLang = [position[0], position[1]];
                         }
 
-                        if (latLang && latLang[0] !== undefined && latLang[1] !== undefined) {
+                        if (latLang && latLang[0] && latLang[1] && latLang[0] !== undefined && latLang[1] !== undefined) {
                             marker = L.marker(latLang, {
                                 uid: data[i].uid
                             });
@@ -162,15 +177,15 @@ app.mapView = kendo.observable({
                         var marker, newItem;
 
                         marker = e.layer;
-                        if (marker.options.icon.options.className.indexOf("current-marker") >= 0) {
+                        if (marker.options.icon.options.className.indexOf('current-marker') >= 0) {
                             return;
                         }
 
                         newItem = mapViewModel.setCurrentItemByUid(marker.options.uid);
-                        mapViewModel.set("itemDetailsVisible", true);
+                        mapViewModel.set('itemDetailsVisible', true);
                     });
 
-                    mapViewModel.set("mapVisble", true);
+                    mapViewModel.set('mapVisble', true);
                     mapViewModel.map.invalidateSize({
                         reset: true
                     });
@@ -201,7 +216,13 @@ app.mapView = kendo.observable({
             error: function(e) {
                 app.mobileApp.pane.loader.hide();
                 if (e.xhr) {
-                    alert(JSON.stringify(e.xhr));
+                    var errorText = "";
+                    try {
+                        errorText = JSON.stringify(e.xhr);
+                    } catch (jsonErr) {
+                        errorText = e.xhr.responseText || e.xhr.statusText || 'An error has occurred!';
+                    }
+                    alert(errorText);
                 }
             },
             schema: {
@@ -221,11 +242,10 @@ app.mapView = kendo.observable({
                 dir: 'asc'
             },
         },
-        dataSource = new kendo.data.DataSource(dataSourceOptions),
-        // start data sources
-        // end data sources
+        /// start data sources
+        /// end data sources
         mapViewModel = kendo.observable({
-            dataSource: dataSource,
+            _dataSourceOptions: dataSourceOptions,
             fixHierarchicalData: function(data) {
                 var result = {},
                     layout = {};
@@ -250,6 +270,10 @@ app.mapView = kendo.observable({
                 (function fix(source, layout) {
                     var i, j, name, srcObj, ltObj, type,
                         names = Object.getOwnPropertyNames(layout);
+
+                    if ($.type(source) !== 'object') {
+                        return;
+                    }
 
                     for (i = 0; i < names.length; i++) {
                         name = names[i];
@@ -280,7 +304,14 @@ app.mapView = kendo.observable({
 
             },
             detailsShow: function(e) {
-                mapViewModel.setCurrentItemByUid(e.view.params.uid);
+                var uid = e.view.params.uid,
+                    dataSource = mapViewModel.get('dataSource'),
+                    itemModel = dataSource.getByUid(uid);
+
+                mapViewModel.setCurrentItemByUid(uid);
+
+                /// start detail form show
+                /// end detail form show
             },
             setCurrentItemByUid: function(uid) {
                 var item = uid,
@@ -295,18 +326,24 @@ app.mapView = kendo.observable({
                 mapViewModel.set('currentItem',
                     mapViewModel.fixHierarchicalData(itemModel));
 
+                /// start detail form initialization
+                /// end detail form initialization
+
                 return itemModel;
             },
             linkBind: function(linkString) {
                 var linkChunks = linkString.split('|');
                 if (linkChunks[0].length === 0) {
-                    return this.get("currentItem." + linkChunks[1]);
+                    return this.get('currentItem.' + linkChunks[1]);
                 }
-                return linkChunks[0] + this.get("currentItem." + linkChunks[1]);
+                return linkChunks[0] + this.get('currentItem.' + linkChunks[1]);
             },
             imageBind: function(imageField) {
-                if (imageField.indexOf("|") > -1) {
-                    return processImage(this.get("currentItem." + imageField.split("|")[0]));
+                if (!imageField) {
+                    return;
+                }
+                if (imageField.indexOf('|') > -1) {
+                    return processImage(this.get('currentItem.' + imageField.split('|')[0]));
                 }
                 return processImage(imageField);
             },
@@ -316,6 +353,11 @@ app.mapView = kendo.observable({
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {
             parent.set('mapViewModel', mapViewModel);
+            var param = parent.get('mapViewModel_delayedFetch');
+            if (typeof param !== 'undefined') {
+                parent.set('mapViewModel_delayedFetch', undefined);
+                fetchFilteredData(param);
+            }
         });
     } else {
         parent.set('mapViewModel', mapViewModel);
@@ -324,7 +366,9 @@ app.mapView = kendo.observable({
     parent.set('onShow', function(e) {
         var param = e.view.params.filter ? JSON.parse(e.view.params.filter) : null,
             isListmenu = false,
-            backbutton = e.view.element && e.view.element.find('header [data-role="navbar"] .backButtonWrapper');
+            backbutton = e.view.element && e.view.element.find('header [data-role="navbar"] .backButtonWrapper'),
+            dataSourceOptions = mapViewModel.get('_dataSourceOptions'),
+            dataSource;
 
         if (param || isListmenu) {
             backbutton.show();
@@ -338,15 +382,20 @@ app.mapView = kendo.observable({
         }
 
         app.mobileApp.pane.loader.show();
-        mapViewModel.set("mapVisble", false);
-        mapViewModel.set("itemDetailsVisible", false);
+        mapViewModel.set('mapVisble', false);
+        mapViewModel.set('itemDetailsVisible', false);
 
-        dataSource.one("change", setupMap);
+        dataSource = new kendo.data.DataSource(dataSourceOptions);
+        mapViewModel.set('dataSource', dataSource);
+        dataSource.one('change', setupMapView);
         fetchFilteredData(param);
     });
+
     parent.set('onHide', function() {
-        dataSource.unbind("change", setupMap);
+        var dataSource = mapViewModel.get('dataSource');
+        dataSource.unbind('change', setupMapView);
     });
+
 })(app.mapView);
 
 // START_CUSTOM_CODE_mapViewModel

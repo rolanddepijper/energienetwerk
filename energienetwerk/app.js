@@ -8,7 +8,7 @@
     var bootstrap = function() {
         $(function() {
             app.mobileApp = new kendo.mobile.Application(document.body, {
-                skin: 'nova',
+                skin: 'flat',
                 initial: 'components/homeView/view.html'
             });
         });
@@ -67,8 +67,8 @@
         }
     };
 
-    // start kendo binders
-    // end kendo binders
+    /// start appjs functions
+    /// end appjs functions
     app.showFileUploadName = function(itemViewName) {
         $('.' + itemViewName).off('change', 'input[type=\'file\']').on('change', 'input[type=\'file\']', function(event) {
             var target = $(event.target),

@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Details" data-model="app.homeView1.homeView1Model" data-bind="events: { show: detailsShow }" id="homeView1ModelDetailsView">
+<div data-role="view" data-title="Details" data-model="app.homeView1.homeView1Model" data-bind="events: { show: detailsShow }" id="homeView1ModelScreen" class="screen screen--detail">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left">Back</a>
@@ -6,21 +6,11 @@
         </div>
     </header>
 
-    <div class="details-content">
+    <div class="details-content screen__content screen__content--details">
         <div class="km-listview-wrapper">
             <ul class="km-listview km-list km-listinset details-fields">
 
 
-                <li class="detail-content-item">
-
-                    <label class="km-label-above">
-
-                        <span>Textarea field</span>
-
-                        <textarea rows="7"></textarea>
-                    </label>
-
-                </li>
             </ul>
         </div>
     </div>

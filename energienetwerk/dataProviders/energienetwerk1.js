@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-    var provider = app.data.energienetwerk = new Everlive({
+    var provider = app.data.energienetwerk1 = new Everlive({
         offlineStorage: true,
         appId: 'fdlokp2fcy7v4kdb',
         scheme: 'https',
@@ -40,7 +40,7 @@
 
 }());
 
-// START_CUSTOM_CODE_energienetwerk
+// START_CUSTOM_CODE_energienetwerk1
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
-// END_CUSTOM_CODE_energienetwerk
+// END_CUSTOM_CODE_energienetwerk1

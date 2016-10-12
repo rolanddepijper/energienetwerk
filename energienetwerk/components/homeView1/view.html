@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Regels" data-layout="main" data-model="app.homeView1" data-show="app.homeView1.onShow" data-after-show="app.homeView1.afterShow">
+<div data-role="view" data-title="Regels" data-layout="main" data-model="app.homeView1" data-show="app.homeView1.onShow" data-after-show="app.homeView1.afterShow" id="homeView1Screen" class="screen">
 
     <!-- START_CUSTOM_CODE_homeView1 -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
@@ -16,7 +16,7 @@
     </header>
 
 
-    <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="homeView1ModelTemplate" data-bind="source: homeView1Model.dataSource, events: {click: homeView1Model.itemClick}" data-pull-to-refresh="false" data-endless-scroll="false">
+    <ul class="masterDetailView" data-role="listview" data-auto-bind="false" data-style="inset" data-template="homeView1ModelTemplate" data-bind="source: homeView1Model.dataSource, events: {click: homeView1Model.itemClick}" data-pull-to-refresh="true" data-endless-scroll="false">
     </ul>
 
 

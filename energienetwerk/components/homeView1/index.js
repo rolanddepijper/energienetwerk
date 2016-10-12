@@ -11,9 +11,18 @@ app.homeView1 = kendo.observable({
 // END_CUSTOM_CODE_homeView1
 (function(parent) {
     var dataProvider = app.data.energienetwerk,
+        /// start global model properties
+        /// end global model properties
         fetchFilteredData = function(paramFilter, searchFilter) {
             var model = parent.get('homeView1Model'),
+                dataSource;
+
+            if (model) {
                 dataSource = model.get('dataSource');
+            } else {
+                parent.set('homeView1Model_delayedFetch', paramFilter || null);
+                return;
+            }
 
             if (paramFilter) {
                 model.set('paramFilter', paramFilter);
@@ -80,13 +89,22 @@ app.homeView1 = kendo.observable({
                 for (var i = 0; i < data.length; i++) {
                     var dataItem = data[i];
 
+                    /// start flattenLocation property
                     flattenLocationProperties(dataItem);
+                    /// end flattenLocation property
+
                 }
             },
             error: function(e) {
 
                 if (e.xhr) {
-                    alert(JSON.stringify(e.xhr));
+                    var errorText = "";
+                    try {
+                        errorText = JSON.stringify(e.xhr);
+                    } catch (jsonErr) {
+                        errorText = e.xhr.responseText || e.xhr.statusText || 'An error has occurred!';
+                    }
+                    alert(errorText);
                 }
             },
             schema: {
@@ -102,15 +120,14 @@ app.homeView1 = kendo.observable({
             serverFiltering: true,
             serverSorting: true,
             sort: {
-                field: 'CreatedAt',
-                dir: 'asc'
+                field: 'regels',
+                dir: 'desc'
             },
         },
-        dataSource = new kendo.data.DataSource(dataSourceOptions),
-        // start data sources
-        // end data sources
+        /// start data sources
+        /// end data sources
         homeView1Model = kendo.observable({
-            dataSource: dataSource,
+            _dataSourceOptions: dataSourceOptions,
             fixHierarchicalData: function(data) {
                 var result = {},
                     layout = {};
@@ -135,6 +152,10 @@ app.homeView1 = kendo.observable({
                 (function fix(source, layout) {
                     var i, j, name, srcObj, ltObj, type,
                         names = Object.getOwnPropertyNames(layout);
+
+                    if ($.type(source) !== 'object') {
+                        return;
+                    }
 
                     for (i = 0; i < names.length; i++) {
                         name = names[i];
@@ -165,7 +186,14 @@ app.homeView1 = kendo.observable({
 
             },
             detailsShow: function(e) {
-                homeView1Model.setCurrentItemByUid(e.view.params.uid);
+                var uid = e.view.params.uid,
+                    dataSource = homeView1Model.get('dataSource'),
+                    itemModel = dataSource.getByUid(uid);
+
+                homeView1Model.setCurrentItemByUid(uid);
+
+                /// start detail form show
+                /// end detail form show
             },
             setCurrentItemByUid: function(uid) {
                 var item = uid,
@@ -180,18 +208,24 @@ app.homeView1 = kendo.observable({
                 homeView1Model.set('currentItem',
                     homeView1Model.fixHierarchicalData(itemModel));
 
+                /// start detail form initialization
+                /// end detail form initialization
+
                 return itemModel;
             },
             linkBind: function(linkString) {
                 var linkChunks = linkString.split('|');
                 if (linkChunks[0].length === 0) {
-                    return this.get("currentItem." + linkChunks[1]);
+                    return this.get('currentItem.' + linkChunks[1]);
                 }
-                return linkChunks[0] + this.get("currentItem." + linkChunks[1]);
+                return linkChunks[0] + this.get('currentItem.' + linkChunks[1]);
             },
             imageBind: function(imageField) {
-                if (imageField.indexOf("|") > -1) {
-                    return processImage(this.get("currentItem." + imageField.split("|")[0]));
+                if (!imageField) {
+                    return;
+                }
+                if (imageField.indexOf('|') > -1) {
+                    return processImage(this.get('currentItem.' + imageField.split('|')[0]));
                 }
                 return processImage(imageField);
             },
@@ -201,6 +235,11 @@ app.homeView1 = kendo.observable({
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {
             parent.set('homeView1Model', homeView1Model);
+            var param = parent.get('homeView1Model_delayedFetch');
+            if (typeof param !== 'undefined') {
+                parent.set('homeView1Model_delayedFetch', undefined);
+                fetchFilteredData(param);
+            }
         });
     } else {
         parent.set('homeView1Model', homeView1Model);
@@ -209,7 +248,9 @@ app.homeView1 = kendo.observable({
     parent.set('onShow', function(e) {
         var param = e.view.params.filter ? JSON.parse(e.view.params.filter) : null,
             isListmenu = false,
-            backbutton = e.view.element && e.view.element.find('header [data-role="navbar"] .backButtonWrapper');
+            backbutton = e.view.element && e.view.element.find('header [data-role="navbar"] .backButtonWrapper'),
+            dataSourceOptions = homeView1Model.get('_dataSourceOptions'),
+            dataSource;
 
         if (param || isListmenu) {
             backbutton.show();
@@ -222,6 +263,8 @@ app.homeView1 = kendo.observable({
             }
         }
 
+        dataSource = new kendo.data.DataSource(dataSourceOptions);
+        homeView1Model.set('dataSource', dataSource);
         fetchFilteredData(param);
     });
 
