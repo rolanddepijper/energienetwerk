@@ -8,7 +8,6 @@
     var bootstrap = function() {
         $(function() {
             app.mobileApp = new kendo.mobile.Application(document.body, {
-                skin: 'flat',
                 initial: 'components/homeView/view.html'
             });
         });

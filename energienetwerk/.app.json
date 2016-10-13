@@ -133,8 +133,5 @@
   "name": "kendoUiMobileApp",
   "navigation": "drawer",
   "view": "homeView",
-  "skin": "flat",
-  "skinMainColor": "#1a1a1a",
-  "skinTextColor": "#ffffff",
-  "skinAccentColor": "#10c4b2"
+  "skin": "native"
 }
