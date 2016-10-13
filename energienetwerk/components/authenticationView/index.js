@@ -11,7 +11,8 @@ app.authenticationView = kendo.observable({
 // END_CUSTOM_CODE_authenticationView
 (function(parent) {
     var provider = app.data.energienetwerk,
-
+        mode = 'signin',
+        registerRedirect = 'homeView',
         signinRedirect = 'homeView',
         rememberKey = 'energienetwerk_authData_authenticationViewModel',
         init = function(error, result) {
@@ -25,7 +26,7 @@ app.authenticationView = kendo.observable({
                 return false;
             }
 
-            var activeView = '.signin-view',
+            var activeView = mode === 'signin' ? '.signin-view' : '.signup-view',
                 model = parent.authenticationViewModel;
 
             if (provider.setup && provider.setup.offlineStorage && !app.isOnline()) {
@@ -33,6 +34,12 @@ app.authenticationView = kendo.observable({
                 $('.offline').show();
             } else {
                 $('.offline').hide();
+
+                if (mode === 'signin') {
+                    $('.signup-view').hide();
+                } else {
+                    $('.signin-view').hide();
+                }
 
                 $(activeView).show();
             }
@@ -50,7 +57,7 @@ app.authenticationView = kendo.observable({
             }
         },
         successHandler = function(data) {
-            var redirect = signinRedirect,
+            var redirect = mode === 'signin' ? signinRedirect : registerRedirect,
                 model = parent.authenticationViewModel || {},
                 logout = model.logout;
 
@@ -118,6 +125,31 @@ app.authenticationView = kendo.observable({
 
                 provider.Users.login(email, password, successHandler, init);
 
+            },
+            register: function() {
+                var model = authenticationViewModel,
+                    email = model.email.toLowerCase(),
+                    password = model.password,
+                    displayName = model.displayName,
+                    attrs = {
+                        Email: email,
+                        DisplayName: displayName
+                    };
+
+                if (!model.validateData(model)) {
+                    return false;
+                }
+
+                provider.Users.register(email, password, attrs, successHandler, init);
+
+            },
+            toggleView: function() {
+                var model = authenticationViewModel;
+                model.set('errorMessage', '');
+
+                mode = mode === 'signin' ? 'register' : 'signin';
+
+                init();
             }
         });
 
