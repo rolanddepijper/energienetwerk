@@ -185,6 +185,10 @@ app.homeView1 = kendo.observable({
                 app.mobileApp.navigate('#components/homeView1/details.html?uid=' + dataItem.uid);
 
             },
+            editClick: function() {
+                var uid = this.originalItem.uid;
+                app.mobileApp.navigate('#components/homeView1/edit.html?uid=' + uid);
+            },
             detailsShow: function(e) {
                 var uid = e.view.params.uid,
                     dataSource = homeView1Model.get('dataSource'),
@@ -231,6 +235,72 @@ app.homeView1 = kendo.observable({
             },
             currentItem: {}
         });
+
+    parent.set('editItemViewModel', kendo.observable({
+        /// start edit model properties
+        /// end edit model properties
+        /// start edit model functions
+        /// end edit model functions
+        editFormData: {},
+        onShow: function(e) {
+            var that = this,
+                itemUid = e.view.params.uid,
+                dataSource = homeView1Model.get('dataSource'),
+                itemData = dataSource.getByUid(itemUid),
+                fixedData = homeView1Model.fixHierarchicalData(itemData);
+
+            this.set('itemData', itemData);
+            this.set('editFormData', {
+                textField: itemData.ToevoegingRegels,
+                /// start edit form data init
+                /// end edit form data init
+            });
+            /// start edit form show
+            /// end edit form show
+        },
+        linkBind: function(linkString) {
+            var linkChunks = linkString.split(':');
+            return linkChunks[0] + ':' + this.get('itemData.' + linkChunks[1]);
+        },
+        onSaveClick: function(e) {
+            var that = this,
+                editFormData = this.get('editFormData'),
+                itemData = this.get('itemData'),
+                dataSource = homeView1Model.get('dataSource');
+
+            /// edit properties
+            itemData.set('ToevoegingRegels', editFormData.textField);
+            /// start edit form data save
+            /// end edit form data save
+
+            function editModel(data) {
+                /// start edit form data prepare
+                /// end edit form data prepare
+                dataSource.one('sync', function(e) {
+                    /// start edit form data save success
+                    /// end edit form data save success
+
+                    app.mobileApp.navigate('#:back');
+                });
+
+                dataSource.one('error', function() {
+                    dataSource.cancelChanges(itemData);
+                });
+
+                dataSource.sync();
+                app.clearFormDomData('edit-item-view');
+            };
+            /// start edit form save
+            /// end edit form save
+            /// start edit form save handler
+            editModel();
+            /// end edit form save handler
+        },
+        onCancel: function() {
+            /// start edit form cancel
+            /// end edit form cancel
+        }
+    }));
 
     if (typeof dataProvider.sbProviderReady === 'function') {
         dataProvider.sbProviderReady(function dl_sbProviderReady() {

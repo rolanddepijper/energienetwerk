@@ -3,6 +3,7 @@
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left">Back</a>
             <span data-bind="text: currentItem['regels']"></span>
+            <a data-role="button" data-align="right" data-bind="events: { click: editClick }">Edit</a>
         </div>
     </header>
 
@@ -11,6 +12,20 @@
             <ul class="km-listview km-list km-listinset details-fields">
 
 
+                <li class="detail-content-item">
+
+
+                    <label id="textBlockField" class="km-label-above field field--text-block">
+
+                        <span class="field__label">Extra informatie</span>
+
+
+                        <div class="textBlock field__content" data-bind="html: currentItem.ToevoegingRegels"></div>
+
+                    </label>
+
+
+                </li>
             </ul>
         </div>
     </div>

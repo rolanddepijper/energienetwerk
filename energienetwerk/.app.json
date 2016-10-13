@@ -64,13 +64,52 @@
           "detailExtraFields": [],
           "addScreenExtraFields": [],
           "editScreenExtraFields": [],
-          "components": [],
+          "components": [
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "textBlock",
+                  "dataBindingRelationChildren": "[]",
+                  "dataBindingMultipleSelectChildren": "[]",
+                  "title": "Extra informatie",
+                  "inputType": "textBlock",
+                  "wideFieldTitlePosition": "top",
+                  "dataBindingOptional": "ToevoegingRegels"
+                }
+              ],
+              "name": "editableListForm1",
+              "formType": "detail"
+            },
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "textField",
+                  "dataBindingRelationChildren": "[]",
+                  "dataBindingMultipleSelectChildren": "[]",
+                  "title": "Extra informatie",
+                  "inputType": "text",
+                  "titlePosition": "top",
+                  "inputTextType": "text",
+                  "placeholder": "Extra ...",
+                  "dataBinding": "ToevoegingRegels"
+                }
+              ],
+              "name": "editableListForm6",
+              "formType": "edit"
+            }
+          ],
           "name": "homeView1Model",
           "dataProvider": "energienetwerk",
           "collection": "regels",
           "headerField": "regels",
           "addItemForm": false,
-          "editItemForm": false,
+          "editItemForm": true,
+          "editScreenHeaderSource": "static",
+          "editScreenHeaderValue": "Wijzigen",
           "deleteItemButton": false,
           "pullToRefresh": true,
           "endlessScroll": false,
@@ -95,7 +134,13 @@
           "type": "kendo-ui-mobile:authentication",
           "name": "authenticationViewModel",
           "dataProvider": "energienetwerk",
-          "enableRegistration": false,
+          "enableRegistration": true,
+          "gotoRegisterLabel": "Register",
+          "registerEmailLabel": "Email",
+          "registerPasswordLabel": "Password",
+          "registerLabel": "Register",
+          "registerRedirect": "homeView",
+          "gotoSigninLabel": "Sign In",
           "enableLogout": true,
           "logoutLabel": "Sign Out",
           "enableRememberme": true,

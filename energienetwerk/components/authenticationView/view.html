@@ -22,6 +22,30 @@
             <div class="button-group button-group-vertical">
                 <a data-role="button" class="primary" data-bind="events: { click: authenticationViewModel.signin }">Sign In</a>
 
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Register</a>
+
+            </div>
+
+            <span class="status" data-bind="text: authenticationViewModel.errorMessage"></span>
+        </form>
+    </div>
+    <div class="signup-view screen__content screen__content--signup" style="display:none;">
+        <form>
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>Email
+                        <input type="email" data-bind="value: authenticationViewModel.email" required>
+                    </label>
+                </li>
+                <li>
+                    <label>Password
+                        <input type="password" data-bind="value: authenticationViewModel.password">
+                    </label>
+                </li>
+            </ul>
+            <div class="button-group button-group-vertical">
+                <a class="primary" data-role="button" data-bind="events: { click: authenticationViewModel.register }">Register</a>
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Sign In</a>
             </div>
 
             <span class="status" data-bind="text: authenticationViewModel.errorMessage"></span>
