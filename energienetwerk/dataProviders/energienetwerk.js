@@ -4,7 +4,7 @@
     var provider = app.data.energienetwerk = new Everlive({
         offlineStorage: true,
         appId: 'fdlokp2fcy7v4kdb',
-        scheme: 'https',
+        scheme: 'http',
         authentication: {
             persist: true
         }

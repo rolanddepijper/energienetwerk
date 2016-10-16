@@ -50,7 +50,7 @@
           "detailHeaderFieldValue": "Detail"
         }
       ],
-      "title": "Map",
+      "title": "Kaart",
       "addToNavigation": true,
       "icon": "organize"
     },
@@ -135,25 +135,24 @@
           "name": "authenticationViewModel",
           "dataProvider": "energienetwerk",
           "enableRegistration": true,
-          "gotoRegisterLabel": "Register",
+          "gotoRegisterLabel": "Registreer",
           "registerEmailLabel": "Email",
-          "registerPasswordLabel": "Password",
-          "registerLabel": "Register",
+          "registerPasswordLabel": "Wachtwoord",
+          "registerLabel": "Registreer",
           "registerRedirect": "homeView",
-          "gotoSigninLabel": "Sign In",
-          "enableLogout": true,
-          "logoutLabel": "Sign Out",
+          "gotoSigninLabel": "Log in",
+          "enableLogout": false,
           "enableRememberme": true,
-          "remembermeLabel": "Remember Me",
+          "remembermeLabel": "Onthoud mij",
           "emailLabel": "Email",
           "emailPlaceholder": "Email",
-          "passwordLabel": "Password",
-          "passwordPlaceholder": "Password",
-          "signinLabel": "Sign In",
+          "passwordLabel": "Wachtwoord",
+          "passwordPlaceholder": "Wachtwoord",
+          "signinLabel": "Log in",
           "signinRedirect": "homeView"
         }
       ],
-      "title": "inloggen",
+      "title": "Inloggen",
       "addToNavigation": false
     }
   ],
@@ -165,18 +164,10 @@
       "source": "everlive",
       "everliveKey": "fdlokp2fcy7v4kdb",
       "offlineStorage": true
-    },
-    {
-      "type": "kendo-ui-mobile:dataProvider",
-      "name": "energienetwerk1",
-      "title": "energienetwerk / energienetwerk",
-      "source": "everlive",
-      "everliveKey": "fdlokp2fcy7v4kdb",
-      "offlineStorage": true
     }
   ],
   "name": "kendoUiMobileApp",
   "navigation": "drawer",
-  "view": "homeView",
+  "view": "authenticationView",
   "skin": "native"
 }
