@@ -10,12 +10,19 @@
           "name": "homeViewModel",
           "appName": "Enexis",
           "appIcon": "th155L8NMJ.jpg",
-          "contactButton": false,
-          "facebookButton": false,
-          "twitterButton": false
+          "appDescription": "Deze applicatie helpt u bij het vinden van leidingen in de grond. \nGeschreven door Nick de Pijper in opdracht van Enexis.",
+          "contactButton": true,
+          "contactLabel": "Contacteer ons",
+          "contactMail": "nick@de-pijper.nl",
+          "facebookButton": true,
+          "facebookLabel": "Vind ons leuk op Facebook",
+          "facebookLink": "https://www.facebook.com/enexisbv",
+          "twitterButton": true,
+          "twitterLabel": "Volg ons op Twitter",
+          "twitterLink": "https://twitter.com/enexis"
         }
       ],
-      "title": "Home",
+      "title": "Start",
       "addToNavigation": true,
       "icon": "home"
     },
@@ -141,7 +148,8 @@
           "registerLabel": "Registreer",
           "registerRedirect": "homeView",
           "gotoSigninLabel": "Log in",
-          "enableLogout": false,
+          "enableLogout": true,
+          "logoutLabel": "Uitloggen",
           "enableRememberme": true,
           "remembermeLabel": "Onthoud mij",
           "emailLabel": "Email",

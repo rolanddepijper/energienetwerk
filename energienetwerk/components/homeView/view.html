@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Home" data-layout="main" data-model="app.homeView" data-show="app.homeView.onShow" data-after-show="app.homeView.afterShow" id="homeViewScreen" class="screen">
+<div data-role="view" data-title="Start" data-layout="main" data-model="app.homeView" data-show="app.homeView.onShow" data-after-show="app.homeView.afterShow" id="homeViewScreen" class="screen">
     <div class="about-view screen__content screen__content--about" data-bind="invisible:error">
         <div class="icon-group">
 
@@ -13,10 +13,12 @@
             </div>
         </div>
 
+        <p>Deze applicatie helpt u bij het vinden van leidingen in de grond. Geschreven door Nick de Pijper in opdracht van Enexis.</p>
 
         <div class="button-group button-group-vertical">
-
-
+            <a data-role="button" data-rel="external" href="mailto:nick@de-pijper.nl">Contacteer ons</a>
+            <a data-role="button" data-rel="external" href="#" onclick="app.openLink('https://www.facebook.com/enexisbv');">Vind ons leuk op Facebook</a>
+            <a data-role="button" data-rel="external" href="#" onclick="app.openLink('https://twitter.com/enexis');">Volg ons op Twitter</a>
         </div>
         <!-- START_CUSTOM_CODE_homeViewModel -->
         <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
