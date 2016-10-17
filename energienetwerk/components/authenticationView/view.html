@@ -22,7 +22,7 @@
             <div class="button-group button-group-vertical">
                 <a data-role="button" class="primary" data-bind="events: { click: authenticationViewModel.signin }">Log in</a>
 
-                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Registreer</a>
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Register</a>
 
             </div>
 
@@ -38,14 +38,14 @@
                     </label>
                 </li>
                 <li>
-                    <label>Wachtwoord
+                    <label>Password
                         <input type="password" data-bind="value: authenticationViewModel.password">
                     </label>
                 </li>
             </ul>
             <div class="button-group button-group-vertical">
-                <a class="primary" data-role="button" data-bind="events: { click: authenticationViewModel.register }">Registreer</a>
-                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Log in</a>
+                <a class="primary" data-role="button" data-bind="events: { click: authenticationViewModel.register }">Register</a>
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Sign In</a>
             </div>
 
             <span class="status" data-bind="text: authenticationViewModel.errorMessage"></span>
