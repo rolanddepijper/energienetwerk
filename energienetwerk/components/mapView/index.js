@@ -142,23 +142,59 @@ app.mapView = kendo.observable({
 
                     for (var i = 0; i < data.length; i++) {
 
+                        var Color;
+
+                        switch (data[i].Type) {
+                            case "Gasleiding":
+                                    Color = "red";
+                                    break;
+                            case "Riool":
+                                    Color = "yellow";
+                                    break;
+                            case "Waterleiding":
+                                    Color = "blue";
+                                    break;
+                            default:
+                                    Color = "black";
+                        }
+
+                        var polyline = L.polyline([], {color: Color}).addTo(mapViewModel.map);
+
                         position = data[i].BeginPunt || {};
 
                         if (position.hasOwnProperty('latitude') && position.hasOwnProperty('longitude')) {
                             latLang = [position.latitude, position.longitude];
                         } else if (position.hasOwnProperty('Latitude') && position.hasOwnProperty('Longitude')) {
                             latLang = [position.Latitude, position.Longitude];
-                        } else if (position.length == 2) {
-                            latLang = [position[0], position[1]];
                         }
 
-                        if (latLang && latLang[0] && latLang[1] && latLang[0] !== undefined && latLang[1] !== undefined) {
+                        if (latLang && latLang[0] !== undefined && latLang[1] !== undefined) {
                             marker = L.marker(latLang, {
                                 uid: data[i].uid
                             });
                             mapBounds.extend(latLang);
                             mapViewModel.markersLayer.addLayer(marker);
                         }
+
+                        polyline.addLatLng(latLang);
+
+                        position = data[i].EindPunt || {};
+
+                        if (position.hasOwnProperty('latitude') && position.hasOwnProperty('longitude')) {
+                            latLang = [position.latitude, position.longitude];
+                        } else if (position.hasOwnProperty('Latitude') && position.hasOwnProperty('Longitude')) {
+                            latLang = [position.Latitude, position.Longitude];
+                        }
+
+                        if (latLang && latLang[0] !== undefined && latLang[1] !== undefined) {
+                            marker = L.marker(latLang, {
+                                uid: data[i].uid
+                            });
+                            mapBounds.extend(latLang);
+                            mapViewModel.markersLayer.addLayer(marker);
+                        }
+
+                        polyline.addLatLng(latLang);
                     }
 
                     currentMarkerIcon = L.divIcon({

@@ -162,6 +162,42 @@
       ],
       "title": "Inloggen",
       "addToNavigation": false
+    },
+    {
+      "type": "kendo-ui-mobile:view",
+      "name": "formView",
+      "components": [
+        {
+          "type": "kendo-ui-mobile:form",
+          "components": [
+            {
+              "type": "kendo-ui-mobile:editableListForm",
+              "components": [
+                {
+                  "type": "kendo-ui-mobile:editableListFormField",
+                  "name": "textField1",
+                  "dataBindingRelationChildren": "[]",
+                  "dataBindingMultipleSelectChildren": "[]",
+                  "title": "Opmerking",
+                  "inputType": "text",
+                  "titlePosition": "hidden",
+                  "inputTextType": "text",
+                  "placeholder": "Druk op de knop om te verbinden"
+                }
+              ],
+              "name": "editableListForm11",
+              "formType": "add"
+            }
+          ],
+          "name": "formViewModel",
+          "enableDataBinding": false,
+          "submitButton": "verbinden",
+          "cancelButton": "Onderbreken"
+        }
+      ],
+      "title": "Verbinding GPR",
+      "addToNavigation": true,
+      "icon": "globe"
     }
   ],
   "dataProviders": [
