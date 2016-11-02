@@ -154,6 +154,18 @@ app.mapView = kendo.observable({
                             case "Waterleiding":
                                     Color = "blue";
                                     break;
+                            case "enexis laagspanning":
+                                    Color = "red"
+                                    break;
+                            case "vdbgemmoerdijk riool":
+                                    Color = "purple"
+                                    break;
+                            case "hydreco water":
+                                    Color = "blue";
+                                    break;
+                            case "KPN datatransport":
+                                    Color = "green";
+                                    break;
                             default:
                                     Color = "black";
                         }
