@@ -145,26 +145,20 @@ app.mapView = kendo.observable({
                         var Color;
 
                         switch (data[i].Type) {
-                            case "Gasleiding":
-                                    Color = "red";
-                                    break;
-                            case "Riool":
-                                    Color = "yellow";
-                                    break;
-                            case "Waterleiding":
-                                    Color = "blue";
-                                    break;
                             case "enexis laagspanning":
                                     Color = "red"
                                     break;
                             case "vdbgemmoerdijk riool":
-                                    Color = "purple"
+                                    Color = "magenta"
                                     break;
                             case "hydreco water":
                                     Color = "blue";
                                     break;
                             case "KPN datatransport":
                                     Color = "green";
+                                    break;
+                            case "bw water":
+                                    Color = "orange";
                                     break;
                             default:
                                     Color = "black";
